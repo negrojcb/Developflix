@@ -1,25 +1,26 @@
 import peliculas from "./peliculas.js";
 console.log(peliculas);
 
-const accionContainer = document.getElementById("genero-28");
-const thrillerContainer = document.getElementById("genero-53");
-const aventuraContainer = document.getElementById("genero-12");
+const generos = [28, 53, 12];
 
-const pelisAccion = peliculas.filter((pelicula) =>
-  pelicula.genre_ids.includes(28)
-);
-function poblar(peliculas) {
-  for (let i = 0; i < peliculas.length; i++) {
-    const titulo = pelisAccion[i].original_title;
-    const imgPath = pelisAccion[i].backdrop_path;
+generos.forEach((genero) => {
+  const pelisFiltradas = peliculas.filter((pelicula) =>
+    pelicula.genre_ids.includes(genero)
+  );
+  const pelisContainer = document.getElementById(`genero-${genero}`);
+  poblar(pelisFiltradas, pelisContainer);
+});
+function poblar(pelisFiltradas, pelisContainer) {
+  pelisFiltradas.forEach((pelicula) => {
+    const titulo = pelicula.original_title;
+    const imgPath = pelicula.backdrop_path;
     const peliContainer = document.createElement("div");
     const imgContainer = document.createElement("img");
     imgContainer.src = `https://image.tmdb.org/t/p/w500${imgPath}`;
-    peliContainer.appendChild(imgContainer);
+    pelisContainer.appendChild(imgContainer);
     const titleContainer = document.createElement("h3");
     titleContainer.textContent = `${titulo}`;
-    peliContainer.appendChild(titleContainer);
-    accionContainer.appendChild(peliContainer);
-  }
+    pelisContainer.appendChild(titleContainer);
+    pelisContainer.appendChild(peliContainer);
+  });
 }
-poblar(pelisAccion);
